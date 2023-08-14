@@ -16,7 +16,7 @@ module.exports = {
             return await interaction.reply({ content: 'You do not have the permission to run this command.', ephemeral: true });
         }
 
-        const kickTimer = interaction.options.getInteger('kick-timer') * 60 * 60 * 24 * 1000;
+        const kickTimer = interaction.options.getInteger('kick-timer') * 60 * 60 * 6 * 1000;
         
         const guildConfig = await GuildConfig.findOne({ guildId: interaction.guild.id });
         if (guildConfig) {

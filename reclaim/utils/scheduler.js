@@ -31,7 +31,7 @@ const checkMember = async (member, guild, role) => {
 const iterateMembers = async (guild) => {
     try {
         const guildConfig = await GuildConfig.findOne({ guildId: guild.id });
-        if (guildConfig) {
+        if (guildConfig && (Date.now() - guildConfig.data.scheduledStartTime > (guildConfig.data.scheduledTimer - 30000))) {
             guildConfig.data = {
                 ...guildConfig.data,
                 scheduledStartTime: Date.now()

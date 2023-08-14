@@ -62,7 +62,7 @@ module.exports = {
         let scheduledTimer = interaction.options.getInteger('verification-timer');
 
         if (scheduledTimer) {
-            scheduledTimer = scheduledTimer * 60 * 60 * 24 * 1000;
+            scheduledTimer = scheduledTimer * 60 * 60 * 6 * 1000;
         } else {
             return await interaction.reply({ content: 'Please enter the valid verification timer.', ephemeral: true });
         }
