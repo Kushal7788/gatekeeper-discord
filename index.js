@@ -1,8 +1,9 @@
 // Require the necessary discord.js classes
 const client = require('./client/bot');
-const {Events } = require('discord.js');
+const { Events } = require('discord.js');
 const globalScheduler = require('./reclaim');
 const { newJoiner } = require('./reclaim/utils/new-joiner');
+const { removeMember } = require('./reclaim/utils/remove-member');
 const express = require("express");
 const cors = require("cors");
 require('dotenv').config();
@@ -100,6 +101,10 @@ client.on('ready', async () => {
 
 client.on('guildMemberAdd', async (member) => {
     await newJoiner(member);
+});
+
+client.on('guildMemberRemove', async (member) => {
+    await removeMember(member);
 });
 
 module.exports = app;
