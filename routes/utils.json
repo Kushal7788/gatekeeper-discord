@@ -1,0 +1,26 @@
+{
+    "google-login":{
+        "param1":"emailAddress"
+    },
+    "outlook-login":{
+        "param1":"emailAddress"
+    },
+    "godaddy-login":{
+        "param1":"emailAddress"
+    },
+    "codeforces-rating":{
+        "param1":"rating"
+    },
+    "uidai-aadhar":{
+        "param1":"name"
+    },
+    "uidai-dob":{
+        "param1":"dob"
+    },
+    "uidai-state":{
+        "param1":"stateName"
+    },
+    "irs-name":{
+        "param1":"name"
+    }
+}

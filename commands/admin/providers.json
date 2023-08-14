@@ -1,0 +1,35 @@
+[
+    {
+        "name": "GMail",
+        "value": "google-login"
+    },
+    {
+        "name": "Outlook",
+        "value": "outlook-login"
+    },
+    {
+        "name": "EMail GoDaddy",
+        "value": "godaddy-login"
+    },
+    {
+        "name": "Codeforces Rating",
+        "value": "codeforces-rating"
+    },
+    {
+        "name": "Name Aadhaar",
+        "value": "uidai-aadhar"
+    },
+    {
+        "name": "DOB Aadhaar",
+        "value": "uidai-dob"
+    },
+    {
+        "name": "State Aadhar",
+        "value": "uidai-state"
+    },
+    {
+        "name": "Name IRS",
+        "value": "irs-name"
+    }
+    
+]
