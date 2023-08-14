@@ -84,7 +84,7 @@ function delay(ms) {
 client.on('ready', async () => {
     await delay(3000);
     console.log('Bot is ready.');
-    const schedulerTimer = 1000 * 60 * 60 * 6; // 6 hours
+    const schedulerTimer = 1000 * 60 * 60 * 3; // 6 hours
     // Schedule the role check and message sending
     // await checkAllVerificationStatus();
     try {
