@@ -28,6 +28,9 @@ const verifyMember = async (check) => {
         const guildConfig = await GuildConfig.findOne({ guildId: check.data.guildId });
         const VERIFIED_ROLE = guildConfig.data.verificationRole;
         const userConfig = await UserConfig.findOne({ guildMemberId: check.data.guildId + check.data.memberId });
+        if(!userConfig) {
+            throw new Error(`User config not found for ${check.data.memberId} in ${check.data.guildId}`);
+        }
         let isMemberVerified = false;
         if (guildConfig.data.condition === 'EQ') {
             proofParam === guildConfig.data.value ? isMemberVerified = true : isMemberVerified = false;

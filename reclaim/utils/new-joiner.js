@@ -27,6 +27,15 @@ const newJoiner = async (member) => {
     if (guildConfig) {
         const role = guild.roles.cache.find(role => role.name === guildConfig.data.verificationRole);
         const isVerified = member.roles.cache.has(role.id);
+        const userConfig = await UserConfig.findOne({ guildMemberId: guild.id + member.user.id });
+        if(userConfig){
+            userConfig.data = {
+                ...userConfig.data,
+                isVerified: isVerified,
+            };
+            await userConfig.save();
+            return;
+        };
         createNewUser(guild.id, member, isVerified);
         if (isVerified) return;
         return await sendReclaimUrl(member, guild, guildConfig.data.provider);

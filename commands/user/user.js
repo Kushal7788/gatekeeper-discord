@@ -10,22 +10,30 @@ module.exports = {
 		.setDescription('Sends verification link to the user to verify their account.'),
 	async execute(interaction) {
 		const guildConfig = await GuildConfig.findOne({ guildId: interaction.guild.id });
-		if(!guildConfig)
-		{
-			return await interaction.reply({content: 'Please ask the Admin to setup the Scam Checker Bot before running this command', ephemeral: true});
+		if (!guildConfig) {
+			return await interaction.reply({ content: 'Please ask the Admin to setup the Scam Checker Bot before running this command', ephemeral: true });
 		}
 
-		const userConfig = await UserConfig.findOne({guildMemberId: interaction.guild.id + interaction.member.user.id})
+		const ifUserConfig = await UserConfig.findOne({ guildMemberId: interaction.guild.id + interaction.member.user.id })
 
-		if(!userConfig)
-		{
-			return await interaction.reply({content: 'User not found!', ephemeral: true})
-			
+		if (!ifUserConfig) {
+			const role = interaction.guild.roles.cache.find(role => role.name === guildConfig.data.verificationRole);
+        	const isVerified = interaction.member.roles.cache.has(role.id);
+			const newUser = new UserConfig();
+			newUser.guildMemberId = interaction.guild.id + interaction.member.user.id;
+			newUser.data = {
+				isVerified: isVerified,
+				startTime: Date.now(),
+				username: interaction.member.user.username
+			}
+			await newUser.save();
 		}
-		if(userConfig.data.isVerified)
-		{
-			return await interaction.reply({content: 'You are already verified!', ephemeral: true})
-			
+
+		const userConfig = await UserConfig.findOne({ guildMemberId: interaction.guild.id + interaction.member.user.id })
+
+		if (userConfig.data.isVerified) {
+			return await interaction.reply({ content: 'You are already verified!', ephemeral: true })
+
 		}
 
 		try {
@@ -47,7 +55,7 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(error);
-			return await interaction.reply({content: 'Something went wrong!', ephemeral: true})
+			return await interaction.reply({ content: 'Something went wrong!', ephemeral: true })
 		}
 	},
 };

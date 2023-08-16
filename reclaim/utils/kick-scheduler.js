@@ -7,11 +7,23 @@ const kickMembers = async (member, guild, verifyRole) => {
     const isVerified = member.roles.cache.has(verifyRole.id);
     const userConfig = await UserConfig.findOne({ guildMemberId: guild.id + member.user.id });
     const guildConfig = await GuildConfig.findOne({ guildId: guild.id });
-    if (userConfig && !isVerified && (Date.now() - userConfig.data.startTime > guildConfig.data.kickTimer)) {
+    if(!userConfig){
+        const newUser = new UserConfig();
+        newUser.guildMemberId = guild.id + member.user.id;
+        newUser.data = {
+            isVerified: isVerified,
+            startTime: Date.now(),
+            username: member.user.username
+        };
+        await newUser.save();
+        return;
+    }
+    else if (userConfig && !isVerified && (Date.now() - userConfig.data.startTime > guildConfig.data.kickTimer)) {
         // Check if the user has the 'verificationRole' role
         console.log(`Kicking ${member.user.username}...`);
         await member.kick();
         await UserConfig.deleteOne({ guildMemberId: guild.id + member.user.id });
+        return;
     }
     } catch (err) {
         console.log(`err: ${err}`);
